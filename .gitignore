@@ -7,3 +7,4 @@ local
 .env
 product.py
 .sqllite3
+production.py
