@@ -8,23 +8,20 @@ class Category(models.Model):
         return self.name
 
 
-class Movie(models.Model):
-    title = models.CharField(max_length=100)
-    url = models.URLField()
-    memo = models.TextField(blank=True, null=True)
-    end_at = models.DateTimeField()
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+class Log(models.Model):
+    message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.title
+        return self.message
 
 
-class Job(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    shedule = models.CharField(max_length=255)
-    result = models.TextField(blank=True, null=True)
+class Movie(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    url = models.URLField()
+    memo = models.TextField(blank=True, null=True)
+    end_at = models.DateTimeField(blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1)
     is_active = models.BooleanField(default=True)
     status = models.CharField(
         max_length=20,
@@ -36,9 +33,11 @@ class Job(models.Model):
         ),
         default='pending',
     )
-    description = models.TextField(max_length=1000, blank=True, null=True)
+    image = models.URLField(blank=True, null=True)
+    episode = models.CharField(max_length=100, blank=True, null=True)
+    episode_title = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.movie.title
+        return self.title or self.url
