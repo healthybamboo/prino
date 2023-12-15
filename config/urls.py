@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.shortcuts import redirect
+from django.urls import path, reverse
+
+def foward_admin(request):  # 以下追記箇所
+    return redirect(reverse('admin:index'))
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls,name='admin'),
+    path(r'',foward_admin)
 ]

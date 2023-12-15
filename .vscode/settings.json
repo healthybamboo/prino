@@ -1,4 +1,18 @@
-{
+{ // python formatter settings
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+    "flake8.args": [
+        "--exclude=.git,__pycache__,.venv,__init__.py,migrations",
+    ],
+    "black-formatter.args": [
+        "--line-length",
+        "79",
+        "--skip-string-normalization"
+    ],
+    // python test settings
     "python.testing.pytestArgs": [
         "tests",
     ],
