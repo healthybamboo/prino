@@ -25,17 +25,7 @@ class NotifyService(object):
 
         body = {
             "username": "prino",
-            "content": "## 🤖 アニメ登録通知",
-            "embeds": [
-                {
-                    "title": movie.title + ":" + movie.episode,
-                    "description": movie.episode_title,
-                    "url": movie.url,
-                    "image": {
-                        "url": movie.image,
-                    },
-                }
-            ],
+            "content": "🤖 監視対象を追加",
         }
         res = requests.post(
             discord_notify_webhook, data=json.dumps(body), headers=headers
