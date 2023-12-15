@@ -1,29 +1,10 @@
 version: '3'
 services:
-    mysql:
-      build: ./.docker/mysql
-      restart: unless-stopped
-      container_name: prino_db
-      platform: linux/x86_64
-      environment:
-          MYSQL_DATABASE: django_db
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_USER: django
-          MYSQL_PASSWORD: password
-      volumes:
-        - tmp:/var/run/mysqld
-        - prino_db_data:/var/lib/mysql
-        - ./.docker/mysql/db/my.cnf:/etc/mysql/conf.d/my.cnf
-        - ./.docker/mysql/db/sql:/docker-entrypoint-initdb.d
-      ports:
-        - 3306:3306
-      command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci 
     python:
       container_name: prino_django
       build: ./.docker/python
       volumes:
          - ./:/usr/src/app
-         - tmp:/run/mysqld
       restart: unless-stopped
       ports:
          - 9000:9000
@@ -32,6 +13,4 @@ services:
       command: sleep infinity
 volumes:
     prino_db_data:
-      driver: local
-    tmp:
       driver: local
