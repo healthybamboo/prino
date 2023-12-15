@@ -8,14 +8,6 @@ class Category(models.Model):
         return self.name
 
 
-class Log(models.Model):
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self) -> str:
-        return self.message
-
-
 class Movie(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     url = models.URLField()

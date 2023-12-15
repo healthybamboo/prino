@@ -7,8 +7,7 @@ from apps.primo.models import Movie
 
 class NotifyService(object):
     def __init__(self):
-        self._logger = logging.getLogger(__name__)
-        self._logger.info('NotifyService initialized')
+        pass
 
     def notify(self, movies: Movie):
         self._send_discord_notify(movies)

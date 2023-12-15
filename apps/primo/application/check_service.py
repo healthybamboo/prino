@@ -1,20 +1,17 @@
 import logging
 from dateutil.relativedelta import relativedelta
 from apscheduler.schedulers.background import BackgroundScheduler
-from apps.primo.models import Movie, Log
+from apps.primo.models import Movie
 from .movie_service import MovieService
 from .notify_service import NotifyService
 
 
 class CheckService:
     def __init__(self):
-        self._logger = logging.getLogger(__name__)
         self._movide_service = MovieService()
         self._notify_service = NotifyService()
 
     def _fetch(self):
-        Log.objects.create(message='fetch')
-        self._logger.debug('fetch')
         movies = Movie.objects.all()
         change_movies = []
         for movie in movies:
@@ -47,7 +44,6 @@ class CheckService:
             self._notify_service.notify(movies=change_movies)
 
     def initMovie(self):
-        self._logger.info('initMovie')
         movies = Movie.objects.filter(status='pending').all()
         for movie in movies:
             if movie.is_active:
@@ -73,7 +69,6 @@ class CheckService:
                     continue
 
     def run(self):
-        Log.objects.create(message='start')
         scheduler = BackgroundScheduler()
         scheduler.add_job(
             self._fetch,

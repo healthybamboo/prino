@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
-from .models import Category, Movie, Log
+from .models import Category, Movie
 
 
 # Register your models here.
@@ -29,13 +29,3 @@ class MovieAdmin(admin.ModelAdmin):
 
     def preview(self, obj):
         return mark_safe(f'<img src="{obj.image}" width="150px" />')
-
-    pass
-
-
-@admin.register(Log)
-class LogAdmin(admin.ModelAdmin):
-    list_display = (
-        'message',
-        'created_at',
-    )
