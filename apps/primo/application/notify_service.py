@@ -18,6 +18,30 @@ class NotifyService(object):
             "Content-Type": "application/json",
         }
 
+    def send_register_message(self, movie: Movie):
+        discord_notify_webhook = settings.DISCORD_WEBHOOK_URL
+        headers = self._get_headers()
+        print('send_register_message')
+
+        body = {
+            "username": "prino",
+            "content": "## 🤖 アニメ登録通知",
+            "embeds": [
+                {
+                    "title": movie.title + ":" + movie.episode,
+                    "description": movie.episode_title,
+                    "url": movie.url,
+                    "image": {
+                        "url": movie.image,
+                    },
+                }
+            ],
+        }
+        res = requests.post(
+            discord_notify_webhook, data=json.dumps(body), headers=headers
+        )
+        print(res)
+
     def _send_discord_notify(self, movies: Movie):
         discord_notify_webhook = settings.DISCORD_WEBHOOK_URL
         headers = self._get_headers()
@@ -43,3 +67,4 @@ class NotifyService(object):
         res = requests.post(
             discord_notify_webhook, data=json.dumps(body), headers=headers
         )
+        print(res)
