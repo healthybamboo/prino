@@ -21,7 +21,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/manage.py",
             "args": [
-                "runserver","0.0.0.0:9000","--settings=config.settings.develop"
+                "runserver","0.0.0.0:9000","--settings=config.settings.develop","--noreload"
             ],
             "django": true,
             "justMyCode": true

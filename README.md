@@ -10,5 +10,5 @@ DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/xxxxxxxxxxx'
 
 ### サーバーの起動
 ```
- python runserver 0.0.0.0:9000 --settings=config.settings.production"
+ python manage.py runserver 0.0.0.0:9000 --settings=config.settings.production --noreload
 ```
