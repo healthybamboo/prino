@@ -1,7 +1,14 @@
-# djangoSample
-## 説明
-Djangoプロジェクトの雛形です。
-内容を変更して、新規プロジェクトを作成する際の参考にしてください。
+# Primo
+PrimeVideoの動画更新を通知するDiscordBot
 
 ## 使い方
-リポジトリのルートディレクトリをvscodeで開くと、自動的に仮想環境が有効になります。
+
+### WEBHOOK_URLの設定
+```production.py
+DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/xxxxxxxxxxx'
+```
+
+### サーバーの起動
+```
+ python runserver 0.0.0.0:9000 --settings=config.settings.production"
+```
