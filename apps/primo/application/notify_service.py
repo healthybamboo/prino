@@ -8,33 +8,38 @@ from apps.primo.models import Movie
 
 class NotifyService(object):
     def __init__(self):
-        pass
-
-    def notify(self, movies: Movie):
-        self._send_discord_notify(movies)
-
-    def _get_headers(self):
-        return {
+        self._webhook_url = settings.DISCORD_WEBHOOK_URL
+        self._headers = {
             "Content-Type": "application/json",
         }
 
+    def _send_message(self, data):
+        res = requests.post(
+            self._webhook_url, headers=self._headers, data=json.dumps(data)
+        )
+        return res
+
     def send_register_message(self, movie: Movie):
-        discord_notify_webhook = settings.DISCORD_WEBHOOK_URL
-        headers = self._get_headers()
         print('send_register_message')
 
         body = {
             "username": "prino",
-            "content": "🤖 監視対象を追加",
+            "content": f'## 🤖 監視対象の追加\n{movie.title}を追加\n{movie.url}',
         }
-        res = requests.post(
-            discord_notify_webhook, data=json.dumps(body), headers=headers
-        )
+        res = self._send_message(body)
         print(res)
 
-    def _send_discord_notify(self, movies: Movie):
-        discord_notify_webhook = settings.DISCORD_WEBHOOK_URL
-        headers = self._get_headers()
+    def send_error_message(self, error: str, movie: Movie):
+        print('send_error_message')
+
+        body = {
+            "username": "prino",
+            "content": f'## 🤖 エラー報告\n{movie.title}\n{error}',
+        }
+        res = self._send_message(body)
+        print(res)
+
+    def send_update_message(self, movies: Movie):
         print('send_discord_notify')
 
         body = {
@@ -54,7 +59,6 @@ class NotifyService(object):
                 for movie in movies
             ],
         }
-        res = requests.post(
-            discord_notify_webhook, data=json.dumps(body), headers=headers
-        )
+        print(body)
+        res = self._send_message(body)
         print(res)
