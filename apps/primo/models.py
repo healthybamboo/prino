@@ -1,4 +1,5 @@
 from django.db import models
+from .validators import validate_prime_video_url
 
 
 class Category(models.Model):
@@ -10,10 +11,10 @@ class Category(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
-    url = models.URLField()
+    url = models.URLField(validators=[validate_prime_video_url])
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1)
     memo = models.TextField(blank=True, null=True)
     end_at = models.DateTimeField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, default=1)
     is_active = models.BooleanField(default=True)
     status = models.CharField(
         max_length=20,

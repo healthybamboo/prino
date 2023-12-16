@@ -1,5 +1,4 @@
 import logging
-from dateutil.relativedelta import relativedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from apps.primo.models import Movie
 from .movie_service import MovieService
@@ -23,6 +22,8 @@ class CheckService:
                         episode,
                         episode_title,
                         image,
+                        _,
+                        _,
                     ) = self._movide_service.get_movie_info(movie.url)
                     if not (
                         movie.episode == episode
@@ -35,38 +36,14 @@ class CheckService:
                     movie.image = image
                     movie.save()
                 except Exception as e:
+                    self._notify_service.send_error_message(str(e), movie)
                     print(e)
                     movie.status = 'failed'
                     movie.save()
                     continue
 
         if len(change_movies) > 0:
-            self._notify_service.notify(movies=change_movies)
-
-    def initMovie(self):
-        movies = Movie.objects.filter(status='pending').all()
-        for movie in movies:
-            if movie.is_active:
-                try:
-                    (
-                        episode,
-                        episode_title,
-                        image,
-                        title,
-                        first_posted_date,
-                    ) = self._movide_service.get_movie_info(movie.url)
-                    movie.title = movie.title or title
-                    movie.episode = movie.episode or episode
-                    movie.episode_title = movie.episode_title or episode_title
-                    movie.end_at = first_posted_date + relativedelta(months=+3)
-                    movie.image = movie.image or image
-                    movie.status = 'completed'
-                    movie.save()
-                except Exception as e:
-                    print(e)
-                    movie.status = 'failed'
-                    movie.save()
-                    continue
+            self._notify_service.send_update_message(movies=change_movies)
 
     def run(self):
         scheduler = BackgroundScheduler()
