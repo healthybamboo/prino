@@ -23,6 +23,8 @@ class CheckService:
                         episode,
                         episode_title,
                         image,
+                        _,
+                        _,
                     ) = self._movide_service.get_movie_info(movie.url)
                     if not (
                         movie.episode == episode
