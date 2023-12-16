@@ -1,0 +1,16 @@
+[
+    {
+        "model": "primo.category",
+        "pk": 1,
+        "fields": {
+            "name": "アニメ"
+        }
+    },
+    {
+        "model": "primo.category",
+        "pk": 2,
+        "fields": {
+            "name": "ドラマ"
+        }
+    }
+]
