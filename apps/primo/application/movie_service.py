@@ -48,11 +48,19 @@ class MovieService:
             # primeで見れない場合はスキップ
             if not isAvailablePrime:
                 continue
+
+            if row.select_one('.izvPPq > span > span:first-child') is None:
+                continue
             episode = row.select_one('.izvPPq > span > span:first-child').text
+
+            if row.select_one('.izvPPq > span > span:last-child') is None:
+                continue
             episode_title = row.select_one(
                 '.izvPPq > span > span:last-child'
             ).text
-            image = row.select_one('img').get('src')
+
+            if row.select_one('img') is None:
+                image = row.select_one('img').get('src')
 
         if episode == '' or title == '':
             raise Exception('error: episode is empty')
