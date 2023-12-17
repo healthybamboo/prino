@@ -15,7 +15,7 @@ class Command(LabelCommand):
 
     def _data_change(self):
         print('data change')
-        dbname = 'db.sqlite3'
+        dbname = 'db/db.sqlite3'
         conn = sqlite3.connect(dbname)
         cur = conn.cursor()
         cur.execute(
