@@ -59,7 +59,7 @@ class MovieService:
                 '.izvPPq > span > span:last-child'
             ).text
 
-            if row.select_one('img') is None:
+            if row.select_one('img') is not None:
                 image = row.select_one('img').get('src')
 
         if episode == '' or title == '':
