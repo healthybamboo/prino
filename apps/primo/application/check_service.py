@@ -1,4 +1,5 @@
 import logging
+import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from apps.primo.models import Movie
 from .movie_service import MovieService
@@ -41,6 +42,7 @@ class CheckService:
                     movie.status = 'failed'
                     movie.save()
                     continue
+            time.sleep(1)
 
         if len(change_movies) > 0:
             self._notify_service.send_update_message(movies=change_movies)
