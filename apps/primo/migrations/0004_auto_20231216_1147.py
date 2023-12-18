@@ -7,6 +7,9 @@ def load_fixture(apps, schema_editor):
     call_command(
         'loaddata', 'apps/primo/fixtures/categorys.json', app_label='primo'
     )
+    call_command(
+        'loaddata', 'apps/primo/fixtures/users.json', app_label='primo'
+    )
 
 
 class Migration(migrations.Migration):
