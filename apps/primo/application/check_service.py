@@ -42,7 +42,7 @@ class CheckService:
                     movie.status = 'failed'
                     movie.save()
                     continue
-            time.sleep(1)
+            time.sleep(5)
 
         if len(change_movies) > 0:
             self._notify_service.send_update_message(movies=change_movies)
