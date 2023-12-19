@@ -18,7 +18,7 @@ class MovieService:
         sesssion = requests.Session()
         res = sesssion.get(url, headers=headers)
         if res.status_code != 200:
-            raise Exception(f'error: {res.status_code}')
+            raise Exception(f'error: {res.status_code} \n {url} \n {res.text}')
         return res
 
     def get_movie_info(self, url: str):
