@@ -23,28 +23,16 @@ class MovieService:
     def get_movie_info(self, url: str):
         res = self._get_res(url)
         soup = BeautifulSoup(res.text, "html.parser")
-        title = ''
-        first_posted_date = None
-        if soup.select_one('title') is not None:
-            title = (
-                soup.select_one('title')
-                .text.replace('Amazon.co.jp: ', '')
-                .replace('を観る | Prime Video', '')
-            )
+        title = (
+            soup.select_one('title')
+            .text.replace('Amazon.co.jp: ', '')
+            .replace('を観る | Prime Video', '')
+        )
         first_posted = soup.select_one(
             '#av-ep-episodes-0 > div > div._1wFEYz.ci7S35 > div:nth-child(1)'
-        )
-        if (
-            soup.select_one(
-                '#av-ep-episodes-0 > div > div._1wFEYz.ci7S35 > div:nth-child(1)'
-            )
-            is not None
-        ):
-            first_posted = soup.select_one(
-                '#av-ep-episodes-0 > div > div._1wFEYz.ci7S35 > div:nth-child(1)'
-            ).text
-            dt = datetime.datetime.strptime(first_posted, '%Y年%m月%d日')
-            first_posted_date = datetime.date(dt.year, dt.month, dt.day)
+        ).text
+        dt = datetime.datetime.strptime(first_posted, '%Y年%m月%d日')
+        first_posted_date = datetime.date(dt.year, dt.month, dt.day)
         rows = soup.select('#tab-content-episodes > div > ol > li')
         episode = ''
         episode_title = ''
@@ -60,18 +48,13 @@ class MovieService:
             if not isAvailablePrime:
                 continue
 
-            if row.select_one('.izvPPq > span > span:first-child') is None:
-                continue
             episode = row.select_one('.izvPPq > span > span:first-child').text
 
-            if row.select_one('.izvPPq > span > span:last-child') is None:
-                continue
             episode_title = row.select_one(
                 '.izvPPq > span > span:last-child'
             ).text
 
-            if row.select_one('img') is not None:
-                image = row.select_one('img').get('src')
+            image = row.select_one('img').get('src')
 
         if episode == '' or title == '':
             raise Exception('error: episode is empty')
