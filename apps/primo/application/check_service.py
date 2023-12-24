@@ -36,6 +36,13 @@ class CheckService:
                     movie.episode_title = episode_title
                     movie.image = image
                     movie.save()
+                except AttributeError as e:
+                    # NoneTypeのエラーは通知しない
+                    print(e)
+                    movie.status = 'failed'
+                    movie.save()
+                    continue
+
                 except Exception as e:
                     self._notify_service.send_error_message(str(e), movie)
                     print(e)
