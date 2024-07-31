@@ -1,8 +1,21 @@
 version: '3'
 services:
-    python:
+   postgres:
+      image: postgres:16
+      restart: unless-stopped
+      environment:
+         - POSTGRES_USER=postgres
+         - POSTGRES_PASSWORD=password
+         - POSTGRES_DB=prino
+         - POSTGRES_NON_ROOT_USER=user
+         - POSTGRES_NON_ROOT_PASSWORD=password
+      volumes:
+         - prino_db_data:/var/lib/postgresql/data
+      ports:
+         - 5432:5432
+   python:
       container_name: prino_django
-      build: ./.docker/python
+      build: .
       volumes:
          - ./:/usr/src/app
       restart: unless-stopped
