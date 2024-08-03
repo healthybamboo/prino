@@ -15,7 +15,9 @@ services:
          - 5432:5432
    python:
       container_name: prino_django
-      build: .
+      build:
+         context: .
+         target: dev
       volumes:
          - ./:/usr/src/app
       restart: unless-stopped
