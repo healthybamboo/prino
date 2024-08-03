@@ -13,8 +13,6 @@ echo マイグレーションを完了
 echo Djangoアプリケーションを起動中...
 gunicorn config.wsgi:application \
   --bind 0.0.0.0:9000 \
-  --workers $(nproc) \
-  --threads 2 \
   --timeout 30 \
   --log-level info \
   --limit-request-line 4094 \

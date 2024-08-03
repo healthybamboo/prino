@@ -2,6 +2,9 @@ from .base import *
 
 import os
 
+# DebugモードをFalseに設定
+DEBUG = False
+
 # 環境変数から取得する設定(必須)
 ENVIROMENT_PROPS = {
     'DB_HOST': os.environ.get('DB_HOST'),
@@ -19,7 +22,7 @@ for key, value in ENVIROMENT_PROPS.items():
         raise ValueError(f'{key} is not set in enviroment variables.')
 
 
-ALLOWED_HOSTS = ['prino.bamgrove.net', 'localhost:8000']
+ALLOWED_HOSTS = ['prino.bamgrove.net', 'localhost']
 
 DATABASES = {
     'default': {
