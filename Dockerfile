@@ -54,9 +54,11 @@ RUN  pip install --upgrade pip && \
     pip install -r requirements.txt
 
 
+# 開発ビルド用の設定
 FROM base as dev
 
 
+# 本番ビルド用の設定
 FROM base as prod
 
 # プロジェクトのコードをコピー

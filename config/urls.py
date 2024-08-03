@@ -14,15 +14,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 from django.shortcuts import redirect
 from django.urls import path, reverse
+from django.http.response import HttpResponse
+
 
 def foward_admin(request):  # 以下追記箇所
     return redirect(reverse('admin:index'))
 
+
+def health(request):
+    return HttpResponse('OK')
+
+
 urlpatterns = [
-    path('admin/', admin.site.urls,name='admin'),
-    path(r'',foward_admin)
+    path('health', health),
+    path('admin', admin.site.urls, name='admin'),
+    path(r'', foward_admin),
 ]
