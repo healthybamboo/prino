@@ -5,10 +5,12 @@ on:
     paths:
       - ".github/workflows/*"
       - "**.py"
+      - "**.sh"
       - "static/**"
       - "templates/**"
       - "Dockerfile"
       - "requirements.txt"
+ 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
