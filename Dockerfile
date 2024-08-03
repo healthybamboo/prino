@@ -64,5 +64,8 @@ FROM base as prod
 # プロジェクトのコードをコピー
 COPY . $WORKDIR
 
+# 静的ファイルのコピー
+RUN python manage.py collectstatic --noinput
+
 # サーバーを起動
 CMD ["sh","run.sh"]

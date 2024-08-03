@@ -20,7 +20,6 @@ for key, value in ENVIROMENT_PROPS.items():
 
 
 ALLOWED_HOSTS = ['prino.bamgrove.net', 'localhost:8000']
-STATIC_ROOT = '/usr/src/static'
 
 DATABASES = {
     'default': {
