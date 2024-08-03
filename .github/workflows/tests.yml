@@ -10,7 +10,7 @@ on:
       - 'static/**'
       - 'templates/**'
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
