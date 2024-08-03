@@ -1,13 +1,13 @@
-# Python用のDockerfile
-FROM python:3.9
+# Django環境用のDockerfile
+FROM python:3.11 as base
 USER root
 
 # タイムゾーン設定
 ENV TZ Asia/Tokyo
 
 # ベースイメージに対してコマンドを実行
-RUN apt-get update 
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
     vim \
     less \
     git \
@@ -18,10 +18,12 @@ ENV LANGUAGE ja_JP:ja
 ENV TZ JST-9
 
 # 設定情報(UID,GIDについてはidコマンドでdockerの実行ユーザーと合わせた方がよい)
-ARG USERNAME=vscode
-ARG GROUPNAME=vscode
+ARG USERNAME=prino
+ARG GROUPNAME=prino
 ARG UID=1000
 ARG GID=1000
+ARG STATIC_DIR=/usr/src/static
+ARG LOG_DIR=/usr/src/log
 ARG WORKDIR=/usr/src/app
 
 ENV PYTHONPATH $WORKDIR
@@ -29,28 +31,40 @@ ENV PYTHONPATH $WORKDIR
 # 作業ディレクトリ設定
 WORKDIR $WORKDIR
 
-# --- ユーザー関連の設定 ---
-# ユーザー追加
+
+# ユーザー関連の設定
 RUN groupadd -g $GID $GROUPNAME && \
-    useradd -m -s /bin/bash -u $UID -g $GID $USERNAME
-# フォルダ作成＆管理者設定
-RUN mkdir -p $WORKDIR
-RUN chown -R $UID:$GID $WORKDIR
+    useradd -m -s /bin/bash -u $UID -g $GID $USERNAME && \
+    mkdir -p $WORKDIR && \
+    mkdir -p $STATIC_DIR && \
+    mkdir -p $LOG_DIR && \
+    chown -R $UID:$GID $WORKDIR && \
+    chown -R $UID:$GID $STATIC_DIR && \
+    chown -R $UID:$GID $LOG_DIR
+
+
 # ユーザーのbinaryディレクトリをパスに追加
 ENV PATH /home/$USERNAME/.local/bin:$PATH
 # ユーザー切り替え
 USER $USERNAME
-# -----------------------
 
-
-## --- アプリケーション用の環境設定 ---
 # 初期化用のスクリプトをコピー
 COPY init.sh /script/
 COPY wait-for-it.sh /script/
 
 # パッケージインストール
 COPY requirements.txt $WORKDIR
-RUN python -m pip install --upgrade pip
-RUN python -m pip install --upgrade setuptools
-RUN python -m pip install --user -r requirements.txt
- # -----------------------
+RUN  pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+
+FROM base as dev
+
+
+FROM base as prod
+
+# プロジェクトのコードをコピー
+COPY . $WORKDIR
+
+# Djangoサーバーを起動
+CMD ["gunicorn", "config.wsgi:application", "-c", "config/gunicorn.py"]

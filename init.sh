@@ -1,3 +1,4 @@
+#!/bin/bash
 echo マイグレーションを実行
 python manage.py migrate
 echo マイグレーションを完了
