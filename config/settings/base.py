@@ -29,6 +29,7 @@ SECRET_KEY = (
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+ALLOWED_CIDR_NETS = ['192.168.0.0/16', '172.16.0.0/12', '10.0.0.0/8']
 
 # Application definition
 
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'allow_cidr.middleware.AllowCIDRMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
