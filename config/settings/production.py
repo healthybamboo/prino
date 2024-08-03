@@ -22,7 +22,13 @@ for key, value in ENVIROMENT_PROPS.items():
         raise ValueError(f'{key} is not set in enviroment variables.')
 
 
-ALLOWED_HOSTS = ['prino.bamgrove.net', 'localhost']
+ALLOWED_HOSTS = [
+    'prino.bamgrove.net',
+    'localhost',
+    r'^10\.',
+    r'^172\.(1[6-9]|2[0-9]|3[0-1])\.',
+    r'^192\.168\.',
+]
 
 DATABASES = {
     'default': {
