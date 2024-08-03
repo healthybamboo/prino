@@ -1,3 +1,4 @@
+import re
 from bs4 import BeautifulSoup
 import requests
 import datetime
@@ -28,11 +29,15 @@ class MovieService:
             .text.replace('Amazon.co.jp: ', '')
             .replace('を観る | Prime Video', '')
         )
-        first_posted = soup.select_one(
-            '#av-ep-episodes-0 > div > div._1wFEYz.ci7S35 > div:nth-child(1)'
-        ).text
+        first_episode = soup.select_one('#av-ep-episodes-0')
+
+        first_posted = re.search(
+            r'\d{4}年\d{1,2}月\d{1,2}日', first_episode.text
+        ).group()
+
         dt = datetime.datetime.strptime(first_posted, '%Y年%m月%d日')
         first_posted_date = datetime.date(dt.year, dt.month, dt.day)
+
         rows = soup.select('#tab-content-episodes > div > ol > li')
         episode = ''
         episode_title = ''
