@@ -5,6 +5,3 @@ tmp/
 local
 *.pyc
 .env
-product.py
-db/*
-production.py
