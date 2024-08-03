@@ -8,7 +8,6 @@ if [ $? -ne 0 ]; then
 fi
 echo マイグレーションを完了
 
-
 # === 以下、Djangoの起動処理 ===
 echo Djangoアプリケーションを起動中...
 gunicorn config.wsgi:application \
@@ -17,4 +16,6 @@ gunicorn config.wsgi:application \
   --log-level info \
   --limit-request-line 4094 \
   --worker-connections 1000 \
+  --access-logfile - \
+  --error-logfile - \
   --preload

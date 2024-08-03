@@ -23,7 +23,6 @@ ARG GROUPNAME=prino
 ARG UID=1000
 ARG GID=1000
 ARG STATIC_DIR=/usr/src/static
-ARG LOG_DIR=/usr/src/log
 ARG WORKDIR=/usr/src/app
 
 ENV PYTHONPATH $WORKDIR
@@ -37,11 +36,8 @@ RUN groupadd -g $GID $GROUPNAME && \
     useradd -m -s /bin/bash -u $UID -g $GID $USERNAME && \
     mkdir -p $WORKDIR && \
     mkdir -p $STATIC_DIR && \
-    mkdir -p $LOG_DIR && \
     chown -R $UID:$GID $WORKDIR && \
     chown -R $UID:$GID $STATIC_DIR && \
-    chown -R $UID:$GID $LOG_DIR
-
 
 # ユーザーのbinaryディレクトリをパスに追加
 ENV PATH /home/$USERNAME/.local/bin:$PATH
