@@ -48,10 +48,6 @@ ENV PATH /home/$USERNAME/.local/bin:$PATH
 # ユーザー切り替え
 USER $USERNAME
 
-# 初期化用のスクリプトをコピー
-COPY init.sh /script/
-COPY wait-for-it.sh /script/
-
 # パッケージインストール
 COPY requirements.txt $WORKDIR
 RUN  pip install --upgrade pip && \
@@ -66,5 +62,5 @@ FROM base as prod
 # プロジェクトのコードをコピー
 COPY . $WORKDIR
 
-# Djangoサーバーを起動
-CMD ["gunicorn", "config.wsgi:application", "-c", "config/gunicorn.py"]
+# サーバーを起動
+CMD ["sh","run.sh"]
