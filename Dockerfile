@@ -37,7 +37,7 @@ RUN groupadd -g $GID $GROUPNAME && \
     mkdir -p $WORKDIR && \
     mkdir -p $STATIC_DIR && \
     chown -R $UID:$GID $WORKDIR && \
-    chown -R $UID:$GID $STATIC_DIR && \
+    chown -R $UID:$GID $STATIC_DIR
 
 # ユーザーのbinaryディレクトリをパスに追加
 ENV PATH /home/$USERNAME/.local/bin:$PATH
