@@ -8,7 +8,7 @@ from django.core.management import call_command
 from django.urls import resolve
 from django.contrib.admin import AdminSite
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
+DATA_DIR = os.path.join(os.path.dirname(__file__), 'mock')
 
 
 @pytest.fixture
