@@ -15,3 +15,4 @@ echo 子カテゴリーを追加を完了
 # === 以下、Djangoの起動処理 ===
 echo Djangoアプリケーションを起動...
 gunicorn config.wsgi:applicatio -c config/gunicorn.py
+echo Djangoアプリケーションを起動しました
