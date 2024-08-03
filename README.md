@@ -12,3 +12,9 @@ DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/xxxxxxxxxxx'
 ```
  python manage.py runserver 0.0.0.0:9000 --settings=config.settings.production --noreload
 ```
+
+
+### build
+```
+docker build -t prino:latest --target prod .  
+```
